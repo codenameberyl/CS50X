@@ -1,0 +1,23 @@
+If songs.db contains the top 100 songs of one listener from 2018, how would you characterize
+their audio aura?
+
+To characterize the listeners audio aura, here is what my query looks like and the result below:
+
+SELECT AVG(energy) , AVG(valence), AVG(danceability) from songs;
+
++-------------+--------------+-------------------+
+| AVG(energy) | AVG(valence) | AVG(danceability) |
++-------------+--------------+-------------------+
+| 0.65906     | 0.484443     | 0.71646           |
++-------------+--------------+-------------------+
+
+The result was 0.71646 in AVG(danceability), 0.65906 in AVG(energy), and 0.484443 in AVG(valence).
+So I think the listeners audio aura has an energetic dancing rythme.
+
+
+Hypothesize about why the way you’ve calculated this
+aura might not be very representative of the listener.
+What better ways of calculating this aura would you propose?
+
+It would be better to calculate the listeners audio aura every month because of the type of music released
+and the listeners mood.

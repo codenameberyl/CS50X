@@ -1,0 +1,37 @@
+<li class="comment">
+    <div class="vcard bio">
+        <img src="{{ comment.author.avatar.url }}" alt="{{comment.author.name}}">
+    </div>
+    <div class="comment-body">
+        <h3>{{comment.author.name}}</h3>
+        <div class="meta">{{comment.created_at|date:"F j, Y"}} at {{comment.created_at|date:"h:i A"}}</div>
+        <p>{{ comment.content }}</p>
+
+        {% if user.is_authenticated %}
+            <p><a class="reply" type="button" data-bs-toggle="collapse" data-bs-target="#reply{{ comment.id }}" aria-expanded="false" aria-controls="reply{{ comment.id }}">Reply</a>{% endif %}  <span>{% if comment.replies.exists %}
+            <p class="text-primary"><a type="button" data-bs-toggle="collapse" data-bs-target="#comment{{ comment.id }}" aria-expanded="false" aria-controls="comment{{ comment.id }}">View More Comments</a></p>
+            {% endif %}</span></p>
+            <div class="collapse" id="reply{{ comment.id }}">
+                <form method="post"">
+                    {% csrf_token %}
+                    <input type="hidden" name="{{ comment_form.author.name }}" value="{{ request.user.id }}">
+                    <input type="hidden" name="{{ comment_form.parent_comment.name }}" value="{{ comment.id }}">
+                    <div class="form-group">
+                        {{ comment_form.content }}
+                    </div>
+                    {{ comment_form.captcha }}
+                    <br>
+                    <input type="submit" value="Reply" class="btn btn-primary btn-md" style="float: right;">
+                </form>
+            </div>
+    </div>
+
+    <!-- If there are replies to this comment, display them recursively -->
+    {% if comment.replies %}
+    <ul class="children collapse" id="comment{{ comment.id }}">
+        {% for reply in comment.replies.all %}
+        {% include "pages/comment.html" with comment=reply %}
+        {% endfor %}
+    </ul>
+    {% endif %}
+</li>

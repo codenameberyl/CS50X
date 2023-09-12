@@ -1,0 +1,142 @@
+{% extends "base.html" %}
+{% load static %}
+{% load custom_tags %}
+
+
+{% block head_meta %}
+<meta property="og:title" content="{{ blog.title }}">
+<meta property="og:description" content="{{ blog.content|safe|truncatechars:150 }}">
+<meta property="og:image" content="{{ blog.thumbnail.url }}">
+<meta property="og:url" content="{{ request.build_absolute_uri }}">
+<meta property="og:type" content="article">
+{% endblock %}
+
+{% block head_title %}
+{{blog.title}} | Blog | Ìròyìn
+{% endblock %}
+
+{% block content %}
+<div class="featured-post single-article">
+    <div class="container">
+        <div class="post-slide single-page" style="background-image: url({{blog.thumbnail.url}});">
+            <div class="text-wrap pb-5">
+                <div class="share">
+                    <ul class="list-unstyled">
+                        <li><a href="https://www.linkedin.com/in/codenameberyl"><span class="icon-linkedin"></span></a></li>
+                        <li><a href="https://twitter.com/codenameberyl"><span class="icon-twitter"></span></a></li>
+                        <li><a href="https://www.instagram.com/codenameberyl/"><span class="icon-instagram"></span></a></li>
+                    </ul>
+                </div>
+                <h2 class="text-black">{{blog.title}}</h2>
+                <div class="meta">
+                    <span>{{blog.created_at|date:"M d, Y"}}</span>
+                    <span>&bullet;</span>
+                    <span>{{blog.read_time}}</span>
+                </div>
+            </div>
+        </div> <!-- .post-slide -->
+    </div>
+</div>
+
+<div class="container article">
+    <div class="row justify-content-center align-items-stretch">
+        <article class="col-lg-8 order-lg-2 px-lg-5">
+            {{blog.content|safe}}
+
+            <div class="pt-5 categories_tags ">
+                <p>
+                    Categories:  {% for category in blog.categories.all|slice:":2" %}<a href="{% url 'category' category.name %}">{{ category.name|title }}</a>{% if blog.categories.count > 1 and not forloop.last %},{% endif %} {% endfor %}  Tags: {% for tag in blog.tags.all|slice:":3" %}<a href="{% url 'tag' tag.name %}">#{{ tag.name }}</a>{% if blog.tags.count > 1 and not forloop.last %},{% endif %} {% endfor %}
+                </p>
+            </div>
+
+            <div class="post-single-navigation d-flex align-items-stretch">
+                {% if previous_post %}
+                <a href="{% url 'post' slug=previous_post.slug %}" class="mr-auto w-50 pr-4">
+                    <span class="d-block">Previous Post</span>
+                    {{previous_post.title}}
+                </a>
+                {% endif %}
+                {% if next_post %}
+                    <a href="{% url 'post' slug=next_post.slug %}" class="ml-auto w-50 text-right pl-4">
+                        <span class="d-block">Next Post</span>
+                        {{next_post.title}}
+                    </a>
+                {% endif %}
+            </div>
+
+            <div id="comments" class="pt-5">
+                <h3 class="mb-5">{{ comment_count }} Comment{{ comment_count|pluralize }}</h3>
+                <ul class="comment-list">
+                    {% for comment in comments %}
+                        {% include "pages/comment.html" with comment=comment %}
+                    {% endfor %}
+                </ul>
+                <!-- END comment-list -->
+                    <div class="comment-form-wrap pt-5">
+                        <h3 class="mb-5">Leave a comment</h3>
+                        <form method="post">
+                            {% csrf_token %}
+
+                            {% if user.is_authenticated %}
+                            <div class="form-group">
+                                <input type="hidden" name="{{ comment_form.author.name }}" value="{{ request.user.id }}">
+                            </div>
+                            {% endif %}
+
+                            <div class="form-group">
+                                <label for="{{ comment_form.message.id_for_label }}">Message</label>
+                                {{ comment_form.content }}
+                            </div>
+                            {{ comment_form.captcha }}
+                            <br>
+                            {% for error in comment_form.captcha.errors %}
+                            <p>{{ error }}</p>
+                            {% endfor %}
+
+                            {% if user.is_authenticated %}
+                            <div class="form-group">
+                                <input type="submit" value="Post Comment" class="btn btn-primary btn-md">
+                            </div>
+                            {% else %}
+                            <div class="form-group">
+                                <div class="alert alert-info">Please <a href="{% url 'login' %}?next={{ request.path }}">login</a> to comment</div>
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" value="Post Comment" class="btn btn-primary btn-md" disabled>
+                            </div>
+                            {% endif %}
+                        </form>
+                    </div>
+            </div>
+        </article>
+
+        <div class="col-md-12 col-lg-1 order-lg-1">
+            <div class="share sticky-top">
+                <h3>Share</h3>
+                <ul class="list-unstyled share-article">
+                    <li><a href="https://twitter.com/intent/tweet?url={{ request.build_absolute_uri }}&text={{ blog.title }}" target="_blank" rel="noopener noreferrer"><span class="icon-twitter"></span></a></li>
+                    <li><a href="https://facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}" target="_blank" rel="noopener noreferrer"><span class="icon-facebook"></span></a></li>
+                    <li><a href="https://www.linkedin.com/sharing/share-offsite/?url={{ request.build_absolute_uri }}&title={{ blog.title }}" target="_blank" rel="noopener noreferrer"><span class="icon-linkedin"></span></a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-lg-3 mb-5 mb-lg-0 order-lg-3">
+            <div class="mb-4">
+                <a href="https://youtu.be/o0y_mwtYgnk" data-fancybox class="video-wrap">
+                    <span class="play-wrap"><span class="icon-play"></span></span>
+                    <img src="https://i.imgur.com/BdJPV3t.png" alt="Image" class="img-fluid rounded">
+                </a>
+            </div>
+
+            <div class="share floating-block sticky-top">
+                <h2 class="mb-3 text-black">Subscribe to Newsletter</h2>
+                <p>Far far away behind the word mountains far from.</p>
+                <form action="#">
+                    <input type="email" class="form-control mb-2" placeholder="Enter email">
+                    <input type="submit" value="Subscribe" class="btn btn-primary btn-block">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

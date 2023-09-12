@@ -1,0 +1,222 @@
+{% extends "base.html" %}
+{% load humanize %}
+
+
+{% block head_title %}
+Home | Ìròyìn
+{% endblock %}
+
+{% block content %}
+<div class="container mb-5">
+  <div class="main-slider owl-single owl-carousel">
+    {% if featured_posts %}
+      {% for post, comment_count in featured_posts.items %}
+        <div class="huge-article d-md-flex">
+          <div class="img-wrap">
+            <a href="{% url 'post' slug=post.slug %}"><img src="{{post.thumbnail.url}}" alt="{{post.title}}" class="img-fluid"></a>
+          </div>
+          <div class="text-wrap">
+            <div class="meta`">
+              <span class="d-inline-block">{{post.read_time}}</span>
+              <span class="mx-2">&bullet;</span>
+              <span><a href="{% url 'post' slug=post.slug %}#comments">{{comment_count}} Comment{{comment_count|pluralize}}</a></span>
+            </div>
+            <h3><a href="{% url 'post' slug=post.slug %}">{{post.title}}</a></h3>
+            <p>{{post.content|safe|truncatechars:150}}</p>
+            <div class="author d-flex align-items-center">
+              <div class="img mr-3">
+                <img src="{{post.author.avatar.url}}" alt="{{post.author.name}}" class="img-fluid">
+              </div>
+              <div class="text">
+                <h3><a href="{% url 'about' %}">{{post.author.name}}</a></h3>
+                <strong>Admin</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    {% else %}
+      <div class="col-12">
+        <div class="post-entry horizontal d-md-flex" style="justify-content: center;">
+          <div class="text">
+            <h5>You haven't featured any post.</h5>
+          </div>
+        </div>
+      </div>
+    {% endif %}
+    <!-- item -->
+  </div>
+</div>
+
+<div class="section-latest">
+  <div class="container">
+    <div class="row gutter-v1 align-items-stretch mb-5">
+      <div class="col-12">
+        <h2 class="section-title">Latest</h2>
+      </div>
+      <div class="col-md-9 pr-md-5">
+        <div class="row">
+          {% if latest_posts %}
+            {% for latest_post in latest_posts %}
+              <div class="col-12">
+                <div class="post-entry horizontal d-md-flex">
+                  <div class="media">
+                    <a href="{% url 'post' slug=latest_post.slug %}"><img src="{{latest_post.thumbnail.url}}" alt="{{latest_post.title}}" class="img-fluid"></a>
+                  </div>
+                  <div class="text">
+                    <div class="meta">
+                      <span>{{latest_post.created_at|naturaltime}}</span>
+                      <span>&bullet;</span>
+                      <span>{{latest_post.read_time}}</span>
+                    </div>
+                    <h2><a href="{% url 'post' slug=latest_post.slug %}">{{latest_post.title}}</a></h2>
+                    <p>{{latest_post.content|safe|truncatechars:100}}</p>
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
+          {% else %}
+            <div class="col-12">
+              <div class="post-entry horizontal d-md-flex" style="justify-content: center;">
+                <div class="text">
+                  <h5>You're yet to publish your first post.</h5>
+                </div>
+              </div>
+            </div>
+          {% endif %}
+          <div class="col-12 mb-5">
+            <div class="d-flex justify-content-center">
+              <a href="{% url 'blog' %}" class="btn btn-primary btn-md" style="border-radius: 10px;">View More</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="mb-4">
+          <a href="https://youtu.be/o0y_mwtYgnk" data-fancybox class="video-wrap">
+            <span class="play-wrap"><span class="icon-play"></span></span>
+            <img src="https://i.imgur.com/BdJPV3t.png" alt="Image" class="img-fluid rounded">
+          </a>
+        </div>
+
+        <div class="floating-block sticky-top text-center">
+          <h2 class="mb-3 text-black">Subscribe to Newsletter</h2>
+          <p>Far far away behind the word mountains far from.</p>
+          <form action="#">
+            <input type="email" class="form-control mb-2" placeholder="Enter email">
+            <input type="submit" value="Subscribe" class="btn btn-primary btn-block">
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-6">
+        <div class="row">
+          {% for category, posts in category_posts.items %}
+            {% if category.name == 'tech' %}
+              <div class="col-12">
+                <h2 class="section-title">{{category.name|title}}</h2>
+              </div>
+              {% if posts %}
+                {% for post in posts %}
+                  <div class="col-md-6 col-lg-6">
+                    <div class="post-entry">
+                      <div class="media">
+                        <a href="{% url 'post' slug=post.slug %}"><img src="{{post.thumbnail.url}}" alt="{{post.title}}" class="img-fluid"></a>
+                      </div>
+                      <div class="text">
+                        {% for category in post.categories.all|slice:":1" %}
+                        <div class="meta-cat"><a href="{% url 'category' category.name %}">{{category.name|title}}</a></div>
+                        {% endfor %}
+                        <h2><a href="{% url 'post' slug=post.slug %}">{{post.title}}</a></h2>
+                        <div class="meta">
+                          <span>{{post.created_at|naturaltime}}</span>
+                          <span>&bullet;</span>
+                          <span>{{post.read_time}}</span>
+                        </div>
+                        <p>{{post.content|safe|truncatechars:50}}</p>
+
+                      </div>
+                      <div class="author d-flex align-items-center">
+                        <div class="img mr-3">
+                          <a href="{% url 'about' %}"><img src="{{post.author.avatar.url}}" alt="{{post.author.name}}" class="img-fluid"></a>
+                        </div>
+                        <div class="text">
+                          <h3><a href="{% url 'about' %}">{{post.author.name}}</a></h3>
+                          <strong>Admin</strong>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                {% endfor %}
+              {% else %}
+              <div class="col-12">
+                <div class="post-entry horizontal d-md-flex" style="justify-content: center;">
+                  <div class="text">
+                    <h5>Sports Category has no posts.</h5>
+                  </div>
+                </div>
+              </div>
+              {% endif %}
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <div class="row">
+          {% for category, posts in category_posts.items %}
+            {% if category.name == 'sports' %}
+              <div class="col-12">
+                <h2 class="section-title">{{category.name|title}}</h2>
+              </div>
+              {% if posts %}
+                {% for post in posts %}
+                  <div class="col-md-6 col-lg-6">
+                    <div class="post-entry">
+                      <div class="media">
+                        <a href="{% url 'post' slug=post.slug %}"><img src="{{post.thumbnail.url}}" alt="{{post.title}}" class="img-fluid"></a>
+                      </div>
+                      <div class="text">
+                        {% for category in post.categories.all|slice:":1" %}
+                        <div class="meta-cat"><a href="{% url 'category' category.name %}">{{category.name|title}}</a></div>
+                        {% endfor %}
+                        <h2><a href="{% url 'post' slug=post.slug %}">{{post.title}}</a></h2>
+                        <div class="meta">
+                          <span>{{post.created_at|naturaltime}}</span>
+                          <span>&bullet;</span>
+                          <span>{{post.read_time}}</span>
+                        </div>
+                        <p>{{post.content|safe|truncatechars:50}}</p>
+                      </div>
+                      <div class="author d-flex align-items-center">
+                        <div class="img mr-3">
+                          <a href="{% url 'about' %}"><img src="{{post.author.avatar.url}}" alt="{{post.author.name}}" class="img-fluid"></a>
+                        </div>
+                        <div class="text">
+                          <h3><a href="{% url 'about' %}">{{post.author.name}}</a></h3>
+                          <strong>Admin</strong>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                {% endfor %}
+              {% else %}
+              <div class="col-12">
+                <div class="post-entry horizontal d-md-flex" style="justify-content: center;">
+                  <div class="text">
+                    <h5>Sports Category has no posts.</h5>
+                  </div>
+                </div>
+              </div>
+              {% endif %}
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

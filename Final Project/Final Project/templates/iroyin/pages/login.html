@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+
+{% block head_title %}
+Login | Ìròyìn
+{% endblock %}
+
+{% block content %}
+<div class="site-hero py-5 bg-light mb-0">
+    <div class="container">
+        <div class="row align-items-center justify-content-between">
+            <div class="col-lg-12 text-center">
+                <h1 class="text-black mb-0">Login</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="section-grey bg-light">
+    <div class="container">
+        <div class="block">
+            <div class="row justify-content-center">
+                <div class="col-md-8 col-lg-8 pb-4 aos-init aos-animate" data-aos="fade-up" data-aos-delay="200">
+                    <form method="post">
+                        {% csrf_token %}
+
+                        <input type="hidden" name="next" value="{{ request.GET.next }}">
+
+                        <!-- Email input -->
+                        <div class="form-outline mb-4">
+                            {{ form.email }}
+                            <label class="form-label" for="{{ form.email.id_for_label }}">Email</label>
+                        </div>
+
+                        <!-- Password input -->
+                        <div class="form-outline mb-4">
+                            {{ form.password }}
+                            <label class="form-label" for="{{ form.password.id_for_label }}">Password</label>
+                        </div>
+
+                        <!-- 2 column grid layout -->
+                        <div class="form-outline d-flex justify-content-center mb-4">
+                            <!-- Captcha -->
+                            {{ form.captcha }}
+                        </div>
+                        {% for error in form.errors %}
+                            <div class="alert alert-danger">
+                                <p>{{ error }}</p>
+                            </div>
+                        {% endfor %}
+                        {% for error in field.errors %}
+                            <div class="alert alert-danger">
+                                <p>{{ error }}</p>
+                            </div>
+                        {% endfor %}
+
+                        <!-- Submit button -->
+                        <button type="submit" class="btn btn-primary btn-block mb-4">Sign in</button>
+
+                        <!-- Register buttons -->
+                        <div class="text-center">
+                            <p>Not a member? <a href="{% url 'register' %}?next={{ request.path }}">Register</a></p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

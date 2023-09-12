@@ -1,0 +1,51 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Home
+{% endblock %}
+
+{% block main %}
+    <div class="col-md-12">
+        {% if not holdings %}
+            <h4>You currently have no shares. Start by getting a <a href="./quote">quote</a> or go <a href="./buy">buy</a> some shares!</h4>
+        {% endif %}
+
+        {% if holdings %}
+            <table class="table table-striped" style="text-align: left">
+                <thead>
+                    <tr>
+                      <th>Symbol</th>
+                      <th>Name</th>
+                      <th>Shares</th>
+                      <th>Price</th>
+                      <th>Total</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                      <td colspan="4"></td>
+                      <td>{{grand_total}}</td>
+                    </tr>
+                </tfoot>
+                <tbody>
+                    {% for holding in holdings %}
+                    <tr>
+                      <td>{{holding["symbol"]}}</td>
+                      <td>{{holding["name"]}}</td>
+                      <td>{{holding["shares"]}}</td>
+                      <td>{{holding["price"]}}</td>
+                      <td>{{holding["total"]}}</td>
+                    </tr>
+                    {% endfor %}
+                    <tr>
+                      <td colspan="4"><b>CASH</b></td>
+                      <td>{{cash}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        {% endif %}
+        <br>
+        <br>
+        <h5>Need to change your <a href="/changepassword">Password</a>?</h5>
+    </div>
+{% endblock %}

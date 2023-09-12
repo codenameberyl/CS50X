@@ -1,0 +1,106 @@
+{% block header %}
+<div class="site-mobile-menu site-navbar-target">
+    <div class="site-mobile-menu-header">
+        <div class="site-mobile-menu-close">
+            <span class="icofont-close js-menu-toggle"></span>
+        </div>
+    </div>
+    <div class="site-mobile-menu-body"></div>
+</div>
+
+<div class="site-mobile-menu site-navbar-target">
+    <div class="site-mobile-menu-header">
+        <div class="site-mobile-menu-close">
+            <span class="icofont-close js-menu-toggle"></span>
+        </div>
+    </div>
+    <div class="site-mobile-menu-body"></div>
+</div>
+
+<div class="container">
+    <nav class="site-nav">
+        <div class="row justify-content-between align-items-center">
+            <div class="d-none d-lg-block col-lg-3 top-menu">
+                <a href="https://www.linkedin.com/in/codenameberyl" class="d-inline-flex align-items-center">
+                    <span class="icon-linkedin mr-2"></span></a>
+                <a href="https://twitter.com/codenameberyl" class="d-inline-flex align-items-center">
+                    <span class="icon-twitter mr-2"></span></a>
+                <a href="https://www.instagram.com/codenameberyl/" class="d-inline-flex align-items-center">
+                    <span class="icon-instagram mr-2"></span></a>
+            </div>
+            <div class="col-3 col-md-6 col-lg-6 text-lg-center logo">
+                <a href="{% url 'home' %}">Ìròyìn<span class="text-primary">.</span> </a>
+            </div>
+            <div class="col-9 col-md-6 col-lg-3 text-right top-menu">
+                <div class="d-inline-flex align-items-center">
+                    <div class="search-wrap">
+                        <a href="#" class="d-inline-flex align-items-center js-search-toggle">
+                            <span class="icon-search2 mr-2"></span><span>Search</span>
+                        </a>
+
+                        <form action="{% url 'blog_search' %}" method="post" class="d-flex">
+                            {% csrf_token %}
+                            <input type="search" id="s" name="query" class="form-control" placeholder="Enter keyword and hit enter...">
+                        </form>
+                    </div>
+
+                    <span class="mx-2 d-inline-block d-lg-none"></span>
+                    <a href="https://www.linkedin.com/in/codenameberyl" class="d-inline-flex align-items-center d-inline-block d-lg-none">
+                        <span class="icon-linkedin mr-2"></span>
+                    </a>
+                    <a href="https://twitter.com/codenameberyl" class="d-inline-flex align-items-center d-inline-block d-lg-none">
+                        <span class="icon-twitter mr-2"></span>
+                    </a>
+                    <a href="https://www.instagram.com/codenameberyl/" class="d-inline-flex align-items-center d-inline-block d-lg-none">
+                        <span class="icon-instagram mr-2"></span>
+                    </a>
+
+                    <a href="#" class="burger ml-3 site-menu-toggle js-menu-toggle d-inline-block d-lg-none" data-toggle="collapse" data-target="#main-navbar">
+                        <span></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="d-none d-lg-block row align-items-center py-3">
+            <div class="col-12 col-sm-12 col-lg-12 site-navigation text-center">
+                {% with request.resolver_match.url_name as url_name %}
+                <ul class="js-clone-nav d-none d-lg-inline-block text-left site-menu">
+                    <li class="{% if url_name == 'home' %}active{% endif %}">
+                        <a href="{% url 'home' %}">Home</a>
+                    </li>
+                    <li class="{% if url_name == 'blog' or url_name == 'post' or url_name == 'category' or url_name == 'tag' %}active{% endif %}">
+                        <a href="{% url 'blog' %}">Blog</a>
+                    </li>
+                    <li class="{% if url_name == 'about' %}active{% endif %}">
+                        <a href="{% url 'about' %}">About Us</a>
+                    </li>
+                    <li class="{% if url_name == 'contact' %}active{% endif %}">
+                        <a href="{% url 'contact' %}">Contact Us</a>
+                    </li>
+                    {% if user.is_authenticated %}
+                        <li class="has-children">
+                            <a href="javascript:void(0)" id="user"><span class="icon-user-circle"></span></a>
+                            <ul class="dropdown">
+                                <li class="d-flex justify-content-center align-items-center border-bottom">
+                                    Hello, {{user.name}}
+                                </li>
+                                <li class="d-flex justify-content-center align-items-center">
+                                    <a href="{% url 'logout' %}">Logout</a>
+                                </li>
+                            </ul>
+                        </li>
+                    {% else %}
+                        <li class="{% if url_name == 'login' %}active{% endif %}">
+                            <a href="{% url 'login' %}?next={{ request.path }}">Login</a>
+                        </li>
+                        <li class="{% if url_name == 'register' %}active{% endif %}">
+                            <a href="{% url 'register' %}?next={{ request.path }}">Register</a>
+                        </li>
+                    {% endif %}
+                </ul>
+                {% endwith %}
+            </div>
+        </div>
+    </nav> <!-- END nav -->
+</div> <!-- END container -->
+{% endblock %}

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
+        <link href="styles.css" rel="stylesheet">
+        <title>Trivia!</title>
+        <script>
+            // TODO: Add code to check answers to questions
+            document.addEventListener('DOMContentLoaded', () => {
+                const choices = document.querySelectorAll('.choice');
+                const result1 = document.getElementById('result1');
+                const responseField = document.getElementById('response');
+                const confirmButton = document.getElementById('confirm');
+                const result2 = document.getElementById('result2');
+
+                // Add click event listener to each choice button
+                choices.forEach(choice => {
+                    choice.addEventListener('click', checkAnswer);
+                });
+
+                // Add click event listener to the confirmation button
+                confirmButton.addEventListener('click', checkResponse);
+
+                function checkAnswer(event) {
+                    const selectedChoice = event.target;
+                    choices.forEach(choice => {
+                        if (choice === selectedChoice) {
+                            if (selectedChoice.textContent === 'Abuja') {
+                                selectedChoice.classList.add('correct');
+                                result1.textContent = 'Correct!';
+                            } else {
+                                selectedChoice.classList.add('incorrect');
+                                result1.textContent = 'Incorrect';
+                            }
+                        }
+                    });
+                }
+
+                function checkResponse() {
+                    const userResponse = responseField.value.toLowerCase();
+                    if (userResponse === 'surulere') {
+                        responseField.classList.add('correct');
+                        result2.textContent = 'Correct!';
+                    } else {
+                        responseField.classList.add('incorrect');
+                        result2.textContent = 'Incorrect';
+                    }
+                }
+            })
+        </script>
+    </head>
+    <body>
+        <div class="header">
+            <h1>Trivia!</h1>
+        </div>
+
+        <div class="container">
+            <div class="section">
+                <h2>Part 1: Multiple Choice </h2>
+                <hr>
+                <!-- Add multiple choice question here -->
+                <h3>Which state is the capital of Nigeria?</h3>
+                <button class="choice">Lagos</button>
+                <button class="choice">Sokoto</button>
+                <button class="choice">Abuja</button>
+                <button class="choice">Benin</button>
+                <button class="choice">Oyo</button>
+
+                <div id="result1"></div>
+            </div>
+
+            <div class="section">
+                <h2>Part 2: Free Response</h2>
+                <hr>
+                <!-- Add free response question here -->
+                <h3>In which city in Lagos, Nigeria is the National Theatre?</h3>
+                <input type="text" id="response">
+                <button id="confirm">Check Answer</button>
+
+                <div id="result2"></div>
+            </div>
+        </div>
+    </body>
+</html>
