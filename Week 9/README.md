@@ -2,8 +2,8 @@
 
 ## Achievement
 
-- [x] Lab 9: Birthdays
-- [x] Finance
+- ✅ Lab 9: Birthdays
+- ✅ Finance
 
 
 ## Description

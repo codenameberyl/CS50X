@@ -2,14 +2,14 @@
 
 ## Achievement
 
-- [x] Lab 6: World Cup
-- [x] Sentimental / Hello
-- [x] Sentimental / Mario (Less)
-- [x] Sentimental / Mario (More)
-- [x] Sentimental / Cash
-- [x] Sentimental / Credit
-- [x] Sentimental / Readability
-- [x] DNA
+- ✅ Lab 6: World Cup
+- ✅ Sentimental / Hello
+- ✅ Sentimental / Mario (Less)
+- ✅ Sentimental / Mario (More)
+- ✅ Sentimental / Cash
+- ✅ Sentimental / Credit
+- ✅ Sentimental / Readability
+- ✅ DNA
 
 
 ## Description

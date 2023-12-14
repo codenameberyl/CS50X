@@ -2,12 +2,12 @@
 
 ## Achievement
 
-- [x] Lab 1: Population
-- [x] Hello
-- [x] Mario (Less)
-- [x] Mario (More)
-- [x] Cash
-- [x] Credit
+- ✅ Lab 1: Population
+- ✅ Hello
+- ✅ Mario (Less)
+- ✅ Mario (More)
+- ✅ Cash
+- ✅ Credit
 
 
 ## Description

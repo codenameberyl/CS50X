@@ -2,9 +2,9 @@
 
 ## Achievement
 
-- [x] Lab 7: Songs
-- [x] Movies
-- [x] Sentimental / Mario (Less)
+- ✅ Lab 7: Songs
+- ✅ Movies
+- ✅ Sentimental / Mario (Less)
 
 
 ## Description

@@ -2,12 +2,12 @@
 
 ## Achievement
 
-- [x] Lab 2: Scrabble
-- [x] Readability
-- [x] Bulbs
-- [x] Caesar
-- [x] Substitution
-- [x] Wordle50
+- ✅ Lab 2: Scrabble
+- ✅ Readability
+- ✅ Bulbs
+- ✅ Caesar
+- ✅ Substitution
+- ✅ Wordle50
 
 
 ## Description

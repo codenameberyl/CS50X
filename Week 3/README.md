@@ -2,10 +2,10 @@
 
 ## Achievement
 
-- [x] Lab 3: Sort
-- [x] Plurality
-- [x] Runoff
-- [x] Tideman
+- ✅ Lab 3: Sort
+- ✅ Plurality
+- ✅ Runoff
+- ✅ Tideman
 
 
 ## Description

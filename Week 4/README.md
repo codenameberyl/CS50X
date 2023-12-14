@@ -2,12 +2,12 @@
 
 ## Achievement
 
-- [x] Lab 4: Smiley
-- [x] Lab 4: Volume
-- [x] Filter (Less)
-- [x] Filter (More)
-- [x] Recover
-- [x] Reverse
+- ✅ Lab 4: Smiley
+- ✅ Lab 4: Volume
+- ✅ Filter (Less)
+- ✅ Filter (More)
+- ✅ Recover
+- ✅ Reverse
 
 
 ## Description

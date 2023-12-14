@@ -2,8 +2,8 @@
 
 ## Achievement
 
-- [x] Lab 8: Trivia
-- [x] Homepage
+- ✅ Lab 8: Trivia
+- ✅ Homepage
 
 
 ## Description
