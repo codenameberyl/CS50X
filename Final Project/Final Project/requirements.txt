@@ -13,7 +13,7 @@ django-recaptcha==3.0.0
 idna==3.4
 lxml>=6.1.0
 markdown2==2.4.10
-Pillow>=10.0.1
+Pillow>=12.3.0
 pyquery==2.0.0
 readtime==3.0.0
 requests>=2.32.0
